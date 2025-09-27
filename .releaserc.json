@@ -21,22 +21,9 @@
       }
     ],
     [
-      "@semantic-release/replace",
+      "@semantic-release/exec",
       {
-        "replacements": [
-          {
-            "files": ["README.md"],
-            "from": "wsams/gifverse:[0-9]+\\.[0-9]+\\.[0-9]+",
-            "to": "wsams/gifverse:${nextRelease.version}",
-            "global": true
-          },
-          {
-            "files": ["README.md"],
-            "from": "wsams/gifverse:[0-9]+\\.[0-9]+",
-            "to": "wsams/gifverse:${nextRelease.major}.${nextRelease.minor}",
-            "global": true
-          }
-        ]
+        "prepareCmd": "node scripts/update-readme-version.js ${nextRelease.version}"
       }
     ],
     [
