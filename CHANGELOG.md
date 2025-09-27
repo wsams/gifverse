@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/wsams/gifverse/compare/v1.0.0...v1.0.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* Update repository location ([91c5750](https://github.com/wsams/gifverse/commit/91c57504595d65aab70af0121dae4b848d6c8b8f))
+
 # 1.0.0 (2025-09-27)
 
 
