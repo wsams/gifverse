@@ -16,6 +16,7 @@ permissions:
   issues: write
   pull-requests: write
   id-token: write
+  attestations: write
 
 jobs:
   release:
@@ -68,6 +69,7 @@ jobs:
       contents: read
       packages: write
       id-token: write
+      attestations: write
 
     steps:
     - name: Checkout code
@@ -106,12 +108,22 @@ jobs:
         cache-to: type=gha,mode=max
 
     - name: Generate artifact attestation
+      id: attest
       uses: actions/attest-build-provenance@v1
       continue-on-error: true
       with:
         subject-name: ${{ secrets.DOCKER_USERNAME }}/gifverse
         subject-digest: ${{ steps.build.outputs.digest }}
         push-to-registry: true
+
+    - name: Attestation status
+      if: always()
+      run: |
+        if [ "${{ steps.attest.outcome }}" == "success" ]; then
+          echo "✅ Attestation created successfully"
+        else
+          echo "⚠️ Attestation failed or skipped (this is not critical)"
+        fi
 
     - name: Output image details
       run: |
