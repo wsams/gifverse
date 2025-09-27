@@ -1,3 +1,11 @@
+## [1.0.5](https://github.com/wsams/gifverse/compare/v1.0.4...v1.0.5) (2025-09-27)
+
+
+### Bug Fixes
+
+* Get image tag to push ([fd08b3d](https://github.com/wsams/gifverse/commit/fd08b3d68647051dbc74e0a2c8d78e3c7bd5a959))
+* Tag image to push ([5cc7ced](https://github.com/wsams/gifverse/commit/5cc7ceda3d3b5b223fb5a8225b04bb88bbb382f1))
+
 ## [1.0.4](https://github.com/wsams/gifverse/compare/v1.0.3...v1.0.4) (2025-09-27)
 
 
