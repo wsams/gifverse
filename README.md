@@ -161,9 +161,9 @@ gifverse/
 │   ├── CONTRIBUTING.md
 │   └── LICENSE
 ├── config/              # Configuration files
-│   ├── .releaserc.json
 │   └── pytest.ini
 ├── package.json         # Node.js dependencies (for semantic-release)
+├── .releaserc.json      # Semantic-release configurationt s
 ├── deploy/              # Deployment configurations
 │   ├── docker-compose.yml
 │   └── k8s/

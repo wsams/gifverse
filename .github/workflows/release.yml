@@ -43,7 +43,7 @@ jobs:
         run: npm install
 
       - name: Verify semantic-release installation
-        run: npx semantic-release --version --config config/.releaserc.json
+        run: npx semantic-release --version
 
       - name: Install Python dependencies
         run: |
@@ -58,7 +58,7 @@ jobs:
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --config config/.releaserc.json
+        run: npx semantic-release
 
   docker-build:
     name: Build and Push Docker Image
