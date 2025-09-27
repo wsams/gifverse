@@ -40,7 +40,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install Node.js dependencies
-        run: npm install --prefix config
+        run: npm install
 
       - name: Verify semantic-release installation
         run: npx semantic-release --version --config config/.releaserc.json

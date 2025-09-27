@@ -70,7 +70,7 @@ docker-compose -f deploy/docker-compose.yml up --build
 ### Option 2: Local Python Installation
 
 1. Install Python 3.7 or higher
-2. Install required dependencies:
+1. Install required dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -161,9 +161,9 @@ gifverse/
 │   ├── CONTRIBUTING.md
 │   └── LICENSE
 ├── config/              # Configuration files
-│   ├── package.json
 │   ├── .releaserc.json
 │   └── pytest.ini
+├── package.json         # Node.js dependencies (for semantic-release)
 ├── deploy/              # Deployment configurations
 │   ├── docker-compose.yml
 │   └── k8s/
