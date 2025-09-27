@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/wsams/gifverse/compare/v1.0.2...v1.0.3) (2025-09-27)
+
+
+### Bug Fixes
+
+* Attestation ([7a2bb05](https://github.com/wsams/gifverse/commit/7a2bb050e334a93d9738e59d67ffcee699887ed3))
+* Attestation ([9a67d13](https://github.com/wsams/gifverse/commit/9a67d13201e8a9153476446115fe359acdd6016d))
+
 ## [1.0.2](https://github.com/wsams/gifverse/compare/v1.0.1...v1.0.2) (2025-09-27)
 
 
