@@ -328,16 +328,6 @@ The repository includes a GitHub Actions workflow that automatically builds and 
 - Tag creation (v*)
 - Pull requests (build only)
 
-### Manual Build and Push
-
-```bash
-# Build the image
-docker build -t your-username/gifverse .
-
-# Push to registry
-docker push your-username/gifverse
-```
-
 ## License
 
 MIT License
