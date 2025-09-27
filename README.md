@@ -1,26 +1,343 @@
-gifverse
-========
+# GIFverse
 
-This is a simple but useful app for ridding the world of choppy GIFs. Do you dislike GIFs that don't loop seamlessly, toss them into the gifverse and they come out seamless.
+[![Tests](https://github.com/your-username/gifverse/workflows/Run%20Tests/badge.svg)](https://github.com/your-username/gifverse/actions)
+[![Docker](https://github.com/your-username/gifverse/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)](https://github.com/your-username/gifverse/actions)
 
-Check out a demo. [https://vimeo.com/94618868](https://vimeo.com/94618868)
+A Python web application that creates seamless GIF loops by concatenating original GIF frames with their reversed version.
 
-Chrome bookmarklet that will create a gifverse for any gif opened in a browser window. Just create a Chrome bookmark with the following `URL:`. Now all you have to do is open a gif in a window and click the bookmark. Make sure you're not on an HTML page containing the gif - you must be viewing it directly in the browser. i.e. `Open Image in New Tab`
+## Features
+
+- **Web Interface**: Modern, responsive web interface with Bootstrap 5
+- **Gallery**: Browse all created GIFs with pagination and modal preview
+- **Command Line Interface**: Process GIFs directly from the command line
+- **Pure Python**: No external shell commands required
+- **Frame Processing**: Uses Pillow (PIL) for robust GIF manipulation
+- **Error Handling**: Comprehensive error handling and user feedback
+- **Modern UI**: Beautiful gradients, animations, and responsive design
+
+## Installation
+
+### Option 1: Docker (Recommended)
+
+1. Build and run with Docker:
+
+```bash
+docker build -t gifverse .
+docker run -p 5000:5000 gifverse
+```
+
+1. Or use Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+### Option 2: Local Python Installation
+
+1. Install Python 3.7 or higher
+2. Install required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+
+### Web Interface
+
+1. Start the web server:
+
+**With Docker:**
+
+```bash
+docker run -p 5000:5000 gifverse
+```
+
+**With Docker Compose:**
+
+```bash
+docker-compose up
+```
+
+**With Python:**
+
+```bash
+python gifverse.py
+```
+
+1. Open your browser and go to `http://localhost:5000`
+2. Upload a GIF file or provide a URL to a GIF
+3. The application will create a seamless loop and display the result
+4. Visit the Gallery to browse all your created GIFs
+
+### Command Line Interface
+
+Process a single GIF file:
+
+```bash
+python gifverse_cli.py input.gif
+```
+
+Specify output file:
+
+```bash
+python gifverse_cli.py input.gif -o output_seamless.gif
+```
+
+## How It Works
+
+The application creates seamless GIF loops by:
+
+1. **Extracting Frames**: Reads all frames from the input GIF
+2. **Reversing Frames**: Creates a reversed version of the frames (excluding the last frame to avoid duplication)
+3. **Concatenating**: Combines original frames + reversed frames
+4. **Optimizing**: Saves the result as an optimized GIF with infinite loop
+
+## Technical Details
+
+### Dependencies
+
+- **Flask**: Web framework for the web interface
+- **Pillow (PIL)**: Image processing library for GIF manipulation
+- **requests**: HTTP library for downloading GIFs from URLs
+
+### File Structure
+
+```text
+gifverse/
+├── gifverse.py          # Main web application
+├── gifverse_cli.py      # Command line interface
+├── requirements.txt     # Python dependencies
+├── Dockerfile           # Docker container definition
+├── docker-compose.yml   # Docker Compose configuration
+├── .dockerignore        # Docker ignore file
+├── templates/
+│   └── index.html      # Web interface template
+├── static/             # Static web assets (CSS, JS)
+│   ├── css/
+│   │   └── modern.css  # Modern Bootstrap 5 styling
+│   └── js/
+│       └── modern.js   # Modern JavaScript functionality
+├── k8s/                # Kubernetes manifests
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   └── pvc.yaml
+├── .github/workflows/   # GitHub Actions CI/CD
+│   └── docker-build.yml
+├── tmp/                # Temporary upload directory
+└── gifverses/          # Output directory for processed GIFs
+```
+
+### Key Features
+
+1. **No Shell Dependencies**: Uses Pillow for all image processing
+2. **Better Error Handling**: More descriptive error messages
+3. **Type Safety**: Python's type system helps catch errors
+4. **Cross-Platform**: Works on Windows, macOS, and Linux
+5. **Memory Efficient**: Processes frames without creating temporary files
+6. **Modern Web Framework**: Flask provides clean, maintainable structure
+
+## Configuration
+
+### Web Application Settings
+
+Edit `gifverse.py` to modify:
+
+- `MAX_FILE_SIZE`: Maximum file size for uploads (default: 15MB)
+- `UPLOAD_FOLDER`: Directory for temporary files
+- `OUTPUT_FOLDER`: Directory for processed GIFs
+- `app.secret_key`: Flask secret key for sessions
+
+### Command Line Options
+
+```bash
+python gifverse_cli.py --help
+```
+
+## Limitations
+
+- Maximum file size: 15MB (configurable)
+- Requires Python 3.7+
+- GIF format only (no other image formats)
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"File is not a GIF"**: Ensure the input file is actually a GIF format
+2. **"GIF must have at least 2 frames"**: The input GIF needs multiple frames to create a loop
+3. **Memory errors**: Large GIFs may require more RAM; consider reducing file size
+
+### Performance Tips
+
+- For very large GIFs, consider reducing the frame count first
+- The application processes frames in memory, so RAM usage scales with GIF size
+- Use the CLI version for batch processing multiple files
+
+## Kubernetes Deployment
+
+### Prerequisites
+
+- Kubernetes cluster
+- kubectl configured
+- Docker image available in a registry
+
+### Deploy to Kubernetes
+
+1. Apply the Kubernetes manifests:
+
+```bash
+kubectl apply -f k8s/
+```
+
+1. Check the deployment status:
+
+```bash
+kubectl get pods -l app=gifverse
+kubectl get services
+kubectl get ingress
+```
+
+1. Access the application:
+
+```bash
+# Port forward to access locally
+kubectl port-forward service/gifverse-service 8080:80
+
+# Or access via ingress (if configured)
+# Add gifverse.local to your /etc/hosts pointing to your cluster IP
+```
+
+### Kubernetes Manifests
+
+The `k8s/` directory contains:
+
+- `deployment.yaml` - Main application deployment
+- `service.yaml` - Service to expose the application
+- `ingress.yaml` - Ingress for external access
+- `pvc.yaml` - Persistent volume claim for GIF storage
+
+### Scaling
+
+Scale the application:
+
+```bash
+kubectl scale deployment gifverse --replicas=3
+```
+
+## Testing
+
+The project includes a comprehensive test suite using pytest:
+
+### Running Tests
+
+```bash
+# Run all tests
+python3 -m pytest tests/ -v
+
+# Or use the test runner script
+python3 run_tests.py
+
+# Run specific test file
+python3 -m pytest tests/test_gif_processor.py -v
+
+# Run with coverage
+python3 -m pytest tests/ --cov=gif_processor --cov-report=html
+```
+
+### Test Coverage
+
+The test suite covers:
+
+- **File validation** - Testing `validate_gif_file()` with various inputs
+- **GIF processing** - Testing `process_gif()` with different scenarios
+- **Error handling** - Testing edge cases and error conditions
+- **Integration tests** - Testing the complete workflow
+- **Seamless loop creation** - Verifying the core functionality
+
+### Test Structure
 
 ```
-javascript:function ue(u){u=encodeURIComponent(u);u=u.replace("+","+");u=u.replace("/","/");return u;}u=ue(location.href);t=ue(document.title);b="https://zoopaz.io/gifverse/index.php?a=gifverse&url="+u;window.location=b;
+tests/
+├── __init__.py
+└── test_gif_processor.py    # Main test file with 17 test cases
 ```
 
-INSTALL
-=======
-This application can use one of two image applications to create the animated GIFs: `convert` from ImageMagick or the `gifsicle` program.
+## CI/CD
 
-Open `index.php` and edit `$gifApp`. Set to one of `convert` or `gifsicle`.
+The project uses GitHub Actions for continuous integration and deployment:
 
-Install one of the applications.
+### Workflows
 
-    sudo apt-get install gifsicle
+1. **Test Workflow** (`.github/workflows/test.yml`)
+   - Runs on every push and pull request
+   - Tests against Python 3.9, 3.10, 3.11, and 3.12
+   - Includes code coverage reporting
+   - Caches dependencies for faster builds
 
-    sudo apt-get install imagemagick
+2. **Docker Build Workflow** (`.github/workflows/docker.yml`)
+   - **Runs tests first** - Only builds if all unit tests pass
+   - Builds and pushes Docker images on main branch pushes
+   - Supports multi-architecture builds (AMD64, ARM64)
+   - Tags images with version numbers and branch names
+   - Only runs on main/master branch and tags
+   - **Safety**: Never publishes broken images
 
-Open `index.php` in a browser. Upload a GIF and it's instantly gifversed.
+3. **Docker Test Workflow** (`.github/workflows/docker-test.yml`)
+   - **Runs tests first** - Only tests Docker if unit tests pass
+   - Tests the Docker image functionality
+   - Verifies health endpoints
+   - Tests file upload and processing
+   - Runs on all branches
+
+### Setup for Docker Hub
+
+To enable Docker image publishing, add these secrets to your GitHub repository:
+
+- `DOCKER_USERNAME` - Your Docker Hub username
+- `DOCKER_PASSWORD` - Your Docker Hub access token
+
+All tests are automatically run on every push and pull request via GitHub Actions.
+
+### Workflow Dependencies
+
+```mermaid
+graph TD
+    A[Push to main/master] --> B[Run Tests]
+    B --> C{Tests Pass?}
+    C -->|Yes| D[Build Docker Image]
+    C -->|No| E[❌ Stop - No Build]
+    D --> F[Push to Docker Hub]
+
+    G[Push to any branch] --> H[Run Tests]
+    H --> I{Tests Pass?}
+    I -->|Yes| J[Test Docker Image]
+    I -->|No| K[❌ Stop - No Docker Test]
+```
+
+This ensures that **broken code never gets published** as a Docker image.
+
+## Docker Registry
+
+### GitHub Actions
+
+The repository includes a GitHub Actions workflow that automatically builds and pushes Docker images to Docker Hub on:
+
+- Push to main/master branch
+- Tag creation (v*)
+- Pull requests (build only)
+
+### Manual Build and Push
+
+```bash
+# Build the image
+docker build -t your-username/gifverse .
+
+# Push to registry
+docker push your-username/gifverse
+```
+
+## License
+
+MIT License
