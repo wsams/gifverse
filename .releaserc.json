@@ -35,7 +35,8 @@
       {
         "successComment": "This ${issue.pull_request ? 'PR is included' : 'issue is fixed'} in version ${nextRelease.version} :tada:",
         "labels": false,
-        "releasedLabels": false
+        "releasedLabels": false,
+        "addReleases": "bottom"
       }
     ]
   ]
