@@ -17,7 +17,7 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "CHANGELOG.md"
+        "changelogFile": "docs/CHANGELOG.md"
       }
     ],
     [
@@ -30,7 +30,7 @@
       "@semantic-release/git",
       {
         "assets": [
-          "CHANGELOG.md",
+          "docs/CHANGELOG.md",
           "__init__.py",
           "README.md"
         ],

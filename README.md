@@ -64,7 +64,7 @@ docker run -p 5000:5000 gifverse
 Or use Docker Compose:
 
 ```bash
-docker-compose up --build
+docker-compose -f deploy/docker-compose.yml up --build
 ```
 
 ### Option 2: Local Python Installation
@@ -101,7 +101,7 @@ docker run -p 5000:5000 gifverse
 **With Docker Compose:**
 
 ```bash
-docker-compose up
+docker-compose -f deploy/docker-compose.yml up
 ```
 
 **With Python:**
@@ -150,28 +150,44 @@ The application creates seamless GIF loops by:
 
 ```text
 gifverse/
+├── README.md            # This file
 ├── gifverse.py          # Main web application
 ├── gifverse_cli.py      # Command line interface
+├── gif_processor.py     # Core GIF processing logic
 ├── requirements.txt     # Python dependencies
 ├── Dockerfile           # Docker container definition
-├── docker-compose.yml   # Docker Compose configuration
-├── .dockerignore        # Docker ignore file
-├── templates/
-│   └── index.html      # Web interface template
-├── static/             # Static web assets (CSS, JS)
+├── docs/                # Documentation
+│   ├── CHANGELOG.md
+│   ├── CONTRIBUTING.md
+│   └── LICENSE
+├── config/              # Configuration files
+│   ├── package.json
+│   ├── .releaserc.json
+│   └── pytest.ini
+├── deploy/              # Deployment configurations
+│   ├── docker-compose.yml
+│   └── k8s/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       ├── ingress.yaml
+│       └── pvc.yaml
+├── templates/           # Web interface templates
+│   ├── index.html
+│   └── gallery.html
+├── static/              # Static web assets (CSS, JS)
 │   ├── css/
-│   │   └── modern.css  # Modern Bootstrap 5 styling
+│   │   └── modern.css
 │   └── js/
-│       └── modern.js   # Modern JavaScript functionality
-├── k8s/                # Kubernetes manifests
-│   ├── deployment.yaml
-│   ├── service.yaml
-│   ├── ingress.yaml
-│   └── pvc.yaml
+│       └── modern.js
+├── scripts/             # Utility scripts
+│   └── update-readme-version.js
+├── tests/               # Test suite
+│   ├── __init__.py
+│   └── test_gif_processor.py
+├── images/              # Screenshots and assets
 ├── .github/workflows/   # GitHub Actions CI/CD
-│   └── docker-build.yml
-├── tmp/                # Temporary upload directory
-└── gifverses/          # Output directory for processed GIFs
+├── tmp/                 # Temporary upload directory
+└── gifverses/           # Output directory for processed GIFs
 ```
 
 ### Key Features
@@ -221,7 +237,7 @@ docker run -p 5000:5000 wsams/gifverse:latest
 
 ### Docker Compose with Tags
 
-Update your `docker-compose.yml` to use specific versions:
+Update your `deploy/docker-compose.yml` to use specific versions:
 
 ```yaml
 version: '3.8'
@@ -300,7 +316,7 @@ spec:
 1. Apply the Kubernetes manifests:
 
 ```bash
-kubectl apply -f k8s/
+kubectl apply -f deploy/k8s/
 ```
 
 1. Check the deployment status:
@@ -323,7 +339,7 @@ kubectl port-forward service/gifverse-service 8080:80
 
 ### Kubernetes Manifests
 
-The `k8s/` directory contains:
+The `deploy/k8s/` directory contains:
 
 - `deployment.yaml` - Main application deployment
 - `service.yaml` - Service to expose the application
