@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/wsams/gifverse/compare/v1.0.3...v1.0.4) (2025-09-27)
+
+
+### Bug Fixes
+
+* Release tag to docker hub ([004dbd4](https://github.com/wsams/gifverse/commit/004dbd4dd5c8e2b5564c6da8397aaa5532206881))
+
 ## [1.0.3](https://github.com/wsams/gifverse/compare/v1.0.2...v1.0.3) (2025-09-27)
 
 
