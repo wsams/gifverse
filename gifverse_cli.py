@@ -9,6 +9,11 @@ import sys
 from pathlib import Path
 from gif_processor import process_gif, validate_gif_file
 
+try:
+    from . import __version__
+except ImportError:
+    from __init__ import __version__
+
 def process_gif_cli(input_path, output_path):
     """
     Process GIF to create seamless loop by concatenating original with reversed frames
@@ -26,7 +31,7 @@ def main():
     parser = argparse.ArgumentParser(description='Create seamless GIF loops by concatenating original with reversed frames')
     parser.add_argument('input', help='Input GIF file path')
     parser.add_argument('-o', '--output', help='Output GIF file path (default: input_seamless.gif)')
-    parser.add_argument('--version', action='version', version='GIFverse CLI 1.0')
+    parser.add_argument('--version', action='version', version=f'GIFverse CLI {__version__}')
 
     args = parser.parse_args()
 

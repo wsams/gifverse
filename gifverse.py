@@ -19,6 +19,11 @@ from PIL import Image, ImageSequence
 import io
 from gif_processor import process_gif, validate_gif_file
 
+try:
+    from . import __version__
+except ImportError:
+    from __init__ import __version__
+
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Change this in production
 
@@ -209,6 +214,15 @@ def gallery():
                          has_next=has_next,
                          page_numbers=page_numbers,
                          per_page=per_page)
+
+@app.route('/version')
+def version():
+    """Return version information"""
+    return {
+        'version': __version__,
+        'name': 'GIFverse',
+        'description': 'A Python web application that creates seamless GIF loops'
+    }
 
 if __name__ == '__main__':
     # Get port from environment variable (for containerized deployment)

@@ -1,0 +1,42 @@
+{
+  "branches": [
+    "main",
+    "master",
+    {
+      "name": "beta",
+      "prerelease": true
+    },
+    {
+      "name": "alpha",
+      "prerelease": true
+    }
+  ],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "__init__.py"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "successComment": "This ${issue.pull_request ? 'PR is included' : 'issue is fixed'} in version ${nextRelease.version} :tada:",
+        "labels": false,
+        "releasedLabels": false
+      }
+    ]
+  ]
+}

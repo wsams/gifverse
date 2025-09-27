@@ -1,0 +1,17 @@
+{
+  "name": "gifverse",
+  "version": "0.0.0",
+  "description": "A Python web application that creates seamless GIF loops",
+  "private": true,
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "semantic-release": "^21.0.0"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release"
+  }
+}
