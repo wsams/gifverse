@@ -1,3 +1,11 @@
+## [1.0.7](https://github.com/wsams/gifverse/compare/v1.0.6...v1.0.7) (2025-09-27)
+
+
+### Bug Fixes
+
+* **docs:** Reference docker hub image ([a1649b3](https://github.com/wsams/gifverse/commit/a1649b3a947afbffbbe5951b08c5fbaa877fe5fb))
+* **docs:** Update docs to use docker hub image references ([d2491cc](https://github.com/wsams/gifverse/commit/d2491cc0c421b706a9860ec1341fa3b0bf93c960))
+
 ## [1.0.6](https://github.com/wsams/gifverse/compare/v1.0.5...v1.0.6) (2025-09-27)
 
 
