@@ -15,6 +15,7 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -66,6 +67,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
     - name: Checkout code
@@ -105,6 +107,7 @@ jobs:
 
     - name: Generate artifact attestation
       uses: actions/attest-build-provenance@v1
+      continue-on-error: true
       with:
         subject-name: ${{ secrets.DOCKER_USERNAME }}/gifverse
         subject-digest: ${{ steps.build.outputs.digest }}
