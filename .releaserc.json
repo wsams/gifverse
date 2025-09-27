@@ -21,11 +21,31 @@
       }
     ],
     [
+      "@semantic-release/replace",
+      {
+        "replacements": [
+          {
+            "files": ["README.md"],
+            "from": "wsams/gifverse:[0-9]+\\.[0-9]+\\.[0-9]+",
+            "to": "wsams/gifverse:${nextRelease.version}",
+            "global": true
+          },
+          {
+            "files": ["README.md"],
+            "from": "wsams/gifverse:[0-9]+\\.[0-9]+",
+            "to": "wsams/gifverse:${nextRelease.major}.${nextRelease.minor}",
+            "global": true
+          }
+        ]
+      }
+    ],
+    [
       "@semantic-release/git",
       {
         "assets": [
           "CHANGELOG.md",
-          "__init__.py"
+          "__init__.py",
+          "README.md"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
