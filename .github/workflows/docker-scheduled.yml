@@ -1,4 +1,4 @@
-name: Scheduled Docker Build
+name: Nightly Build
 
 on:
   schedule:
