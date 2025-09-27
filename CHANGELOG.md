@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/wsams/gifverse/compare/v1.0.5...v1.0.6) (2025-09-27)
+
+
+### Bug Fixes
+
+* Remote attestation ([361728e](https://github.com/wsams/gifverse/commit/361728eedc6f20d6384aadba81568930ce9f5651))
+
 ## [1.0.5](https://github.com/wsams/gifverse/compare/v1.0.4...v1.0.5) (2025-09-27)
 
 
