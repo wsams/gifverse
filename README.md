@@ -1,7 +1,7 @@
 # GIFverse
 
 [![Tests](https://github.com/wsams/gifverse/workflows/Run%20Tests/badge.svg)](https://github.com/wsams/gifverse/actions)
-[![Docker](https://github.com/wsams/gifverse/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)](https://github.com/wsams/gifverse/actions)
+[![Docker](https://github.com/wsams/gifverse/workflows/Release/badge.svg)](https://github.com/wsams/gifverse/actions)
 [![Docker Hub](https://img.shields.io/badge/Docker%20Hub-wsams%2Fgifverse-blue?logo=docker)](https://hub.docker.com/r/wsams/gifverse)
 
 A Python web application that creates seamless GIF loops by concatenating original GIF frames with their reversed version.
