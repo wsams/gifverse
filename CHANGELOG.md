@@ -1,3 +1,11 @@
+## [1.0.8](https://github.com/wsams/gifverse/compare/v1.0.7...v1.0.8) (2025-09-27)
+
+
+### Bug Fixes
+
+* Add release script ([0d7d824](https://github.com/wsams/gifverse/commit/0d7d8240e15e114b9e773757f9b33eaaaf483ef0))
+* Update docs on release ([5f8f3de](https://github.com/wsams/gifverse/commit/5f8f3de3fc7825bb0f50b238669f7a6f340ef7d9))
+
 ## [1.0.7](https://github.com/wsams/gifverse/compare/v1.0.6...v1.0.7) (2025-09-27)
 
 

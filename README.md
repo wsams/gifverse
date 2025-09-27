@@ -32,8 +32,8 @@ Pull a specific version:
 
 ```bash
 # Pull the latest stable version
-docker pull wsams/gifverse:1.0.6
-docker run -p 5000:5000 wsams/gifverse:1.0.6
+docker pull wsams/gifverse:1.0.8
+docker run -p 5000:5000 wsams/gifverse:1.0.8
 
 # Pull a major.minor version (gets the latest patch)
 docker pull wsams/gifverse:1.0
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 docker run -p 5000:5000 wsams/gifverse:latest
 
 # Specific version
-docker run -p 5000:5000 wsams/gifverse:1.0.6
+docker run -p 5000:5000 wsams/gifverse:1.0.8
 ```
 
 **With Docker (build from source):**
@@ -198,7 +198,7 @@ For production environments, it's recommended to use specific version tags:
 
 ```bash
 # Pin to a specific version for stability
-docker run -p 5000:5000 wsams/gifverse:1.0.6
+docker run -p 5000:5000 wsams/gifverse:1.0.8
 
 # Use major.minor for automatic patch updates
 docker run -p 5000:5000 wsams/gifverse:1.0
@@ -215,7 +215,7 @@ Update your `docker-compose.yml` to use specific versions:
 version: '3.8'
 services:
   gifverse:
-    image: wsams/gifverse:1.0.6  # Pin to specific version
+    image: wsams/gifverse:1.0.8  # Pin to specific version
     ports:
       - "5000:5000"
     volumes:
@@ -278,7 +278,7 @@ spec:
     spec:
       containers:
       - name: gifverse
-        image: wsams/gifverse:1.0.6  # Pin to specific version
+        image: wsams/gifverse:1.0.8  # Pin to specific version
         # or
         image: wsams/gifverse:1.0    # Use major.minor for auto patch updates
 ```
@@ -432,7 +432,7 @@ The repository uses GitHub Actions with semantic-release to automatically:
 - **Build Docker images** with semantic version tags
 - **Push to Docker Hub** with multiple tags:
   - `wsams/gifverse:latest` (always latest)
-  - `wsams/gifverse:1.0.6` (specific version)
+  - `wsams/gifverse:1.0.8` (specific version)
   - `wsams/gifverse:1.0` (major.minor)
   - `wsams/gifverse:1` (major)
 
