@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/wsams/gifverse/compare/v1.0.1...v1.0.2) (2025-09-27)
+
+
+### Bug Fixes
+
+* Push tags ([893dff5](https://github.com/wsams/gifverse/commit/893dff5fb5b4aa40640b36365b6f1dc1925e946b))
+
 ## [1.0.1](https://github.com/wsams/gifverse/compare/v1.0.0...v1.0.1) (2025-09-27)
 
 
