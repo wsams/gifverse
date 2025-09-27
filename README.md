@@ -5,6 +5,15 @@
 
 A Python web application that creates seamless GIF loops by concatenating original GIF frames with their reversed version.
 
+## Screenshots
+
+<div align="center">
+  <img src="images/unicorn-gifverse-home.jpg" alt="GIFverse Home Page" width="400">
+  <img src="images/gifverse-gallery.jpg" alt="GIFverse Gallery" width="400">
+</div>
+
+*Left: Upload a GIF file or provide a URL to create seamless loops | Right: Browse all your created GIFs with pagination and modal preview*
+
 ## Features
 
 - **Web Interface**: Modern, responsive web interface with Bootstrap 5
