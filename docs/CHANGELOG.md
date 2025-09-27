@@ -1,3 +1,20 @@
+# [1.1.0](https://github.com/wsams/gifverse/compare/v1.0.8...v1.1.0) (2025-09-27)
+
+
+### Bug Fixes
+
+* Move package back to root ([7a2603f](https://github.com/wsams/gifverse/commit/7a2603f091525933c168943607f030b3affe6493))
+* Move package back to root ([ec8ec92](https://github.com/wsams/gifverse/commit/ec8ec92dd8bd02970ef81c9b0c69393c492499eb))
+* Release path fix ([a85bd60](https://github.com/wsams/gifverse/commit/a85bd60baea00698bffa554d098396dda2e37638))
+* Release path fix ([2f67b87](https://github.com/wsams/gifverse/commit/2f67b87db3a454c2f308d0d7482bbc9dce9cc365))
+* Trigger a release ([2b39c38](https://github.com/wsams/gifverse/commit/2b39c38397c80e7c83da5633b0dc168b2fafc5cf))
+
+
+### Features
+
+* Refactor layout of project ([8fc012d](https://github.com/wsams/gifverse/commit/8fc012db2ad635844d0474316ee4f53c5cf18310))
+* Refactor layout of project ([f82a879](https://github.com/wsams/gifverse/commit/f82a8796160b09159447ec48b6136944452480e5))
+
 ## [1.0.8](https://github.com/wsams/gifverse/compare/v1.0.7...v1.0.8) (2025-09-27)
 
 
