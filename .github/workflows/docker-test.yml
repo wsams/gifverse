@@ -86,7 +86,10 @@ jobs:
         for i in range(5):
             img = Image.new('RGB', (100, 100), (255, 255, 255))
             draw = ImageDraw.Draw(img)
-            draw.ellipse([20+i*10, 20+i*10, 80-i*10, 80-i*10], fill=(255, 0, 0))
+            # Create a growing circle that moves diagonally
+            x1, y1 = 20 + i*5, 20 + i*5
+            x2, y2 = 40 + i*5, 40 + i*5
+            draw.ellipse([x1, y1, x2, y2], fill=(255, 0, 0))
             frames.append(img)
 
         frames[0].save('test.gif', save_all=True, append_images=frames[1:], duration=100, loop=0)
