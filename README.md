@@ -19,14 +19,37 @@ A Python web application that creates seamless GIF loops by concatenating origin
 
 ### Option 1: Docker (Recommended)
 
-1. Build and run with Docker:
+#### Using Pre-built Images
+
+Pull and run the latest version:
+
+```bash
+docker pull wsams/gifverse:latest
+docker run -p 5000:5000 wsams/gifverse:latest
+```
+
+Pull a specific version:
+
+```bash
+# Pull the latest stable version
+docker pull wsams/gifverse:1.0.3
+docker run -p 5000:5000 wsams/gifverse:1.0.3
+
+# Pull a major.minor version (gets the latest patch)
+docker pull wsams/gifverse:1.0
+docker run -p 5000:5000 wsams/gifverse:1.0
+```
+
+#### Building from Source
+
+Build and run with Docker:
 
 ```bash
 docker build -t gifverse .
 docker run -p 5000:5000 gifverse
 ```
 
-1. Or use Docker Compose:
+Or use Docker Compose:
 
 ```bash
 docker-compose up --build
@@ -47,7 +70,17 @@ pip install -r requirements.txt
 
 1. Start the web server:
 
-**With Docker:**
+**With Docker (pre-built image):**
+
+```bash
+# Latest version
+docker run -p 5000:5000 wsams/gifverse:latest
+
+# Specific version
+docker run -p 5000:5000 wsams/gifverse:1.0.3
+```
+
+**With Docker (build from source):**
 
 ```bash
 docker run -p 5000:5000 gifverse
@@ -138,6 +171,55 @@ gifverse/
 5. **Memory Efficient**: Processes frames without creating temporary files
 6. **Modern Web Framework**: Flask provides clean, maintainable structure
 
+## Docker Image Tags
+
+The project automatically builds and publishes Docker images with semantic versioning tags:
+
+### Available Tags
+
+- **`latest`** - Always points to the most recent stable release
+- **`1.0.4`** - Specific version (e.g., 1.0.4)
+- **`1.0`** - Major.minor version (gets the latest patch release)
+- **`1`** - Major version (gets the latest minor and patch release)
+
+### Tag Strategy
+
+The project uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated versioning:
+
+- **Patch releases** (1.0.3 → 1.0.4): Bug fixes and minor improvements
+- **Minor releases** (1.0.4 → 1.1.0): New features (backward compatible)
+- **Major releases** (1.0.4 → 2.0.0): Breaking changes
+
+### Using Specific Versions
+
+For production environments, it's recommended to use specific version tags:
+
+```bash
+# Pin to a specific version for stability
+docker run -p 5000:5000 wsams/gifverse:1.0.3
+
+# Use major.minor for automatic patch updates
+docker run -p 5000:5000 wsams/gifverse:1.0
+
+# Use latest for development/testing
+docker run -p 5000:5000 wsams/gifverse:latest
+```
+
+### Docker Compose with Tags
+
+Update your `docker-compose.yml` to use specific versions:
+
+```yaml
+version: '3.8'
+services:
+  gifverse:
+    image: wsams/gifverse:1.0.3  # Pin to specific version
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./gifverses:/app/gifverses
+```
+
 ## Configuration
 
 ### Web Application Settings
@@ -181,7 +263,23 @@ python gifverse_cli.py --help
 
 - Kubernetes cluster
 - kubectl configured
-- Docker image available in a registry
+- Docker image available in a registry (wsams/gifverse)
+
+### Image Tags
+
+For production deployments, use specific version tags:
+
+```yaml
+# In k8s/deployment.yaml
+spec:
+  template:
+    spec:
+      containers:
+      - name: gifverse
+        image: wsams/gifverse:1.0.3  # Pin to specific version
+        # or
+        image: wsams/gifverse:1.0    # Use major.minor for auto patch updates
+```
 
 ### Deploy to Kubernetes
 
@@ -258,7 +356,7 @@ The test suite covers:
 
 ### Test Structure
 
-```
+```text
 tests/
 ├── __init__.py
 └── test_gif_processor.py    # Main test file with 17 test cases
@@ -276,12 +374,14 @@ The project uses GitHub Actions for continuous integration and deployment:
    - Includes code coverage reporting
    - Caches dependencies for faster builds
 
-2. **Docker Build Workflow** (`.github/workflows/docker.yml`)
-   - **Runs tests first** - Only builds if all unit tests pass
-   - Builds and pushes Docker images on main branch pushes
+2. **Release Workflow** (`.github/workflows/release.yml`)
+   - **Runs tests first** - Only releases if all unit tests pass
+   - Uses semantic-release for automated versioning and changelog generation
+   - Creates Git tags (e.g., v1.0.4) based on conventional commits
+   - Builds and pushes Docker images with semantic version tags
    - Supports multi-architecture builds (AMD64, ARM64)
-   - Tags images with version numbers and branch names
-   - Only runs on main/master branch and tags
+   - Tags images with: `latest`, `1.0.4`, `1.0`, `1` (semantic versioning)
+   - Only runs on main/master branch pushes
    - **Safety**: Never publishes broken images
 
 3. **Docker Test Workflow** (`.github/workflows/docker-test.yml`)
@@ -320,13 +420,28 @@ This ensures that **broken code never gets published** as a Docker image.
 
 ## Docker Registry
 
-### GitHub Actions
+### Automated Releases
 
-The repository includes a GitHub Actions workflow that automatically builds and pushes Docker images to Docker Hub on:
+The repository uses GitHub Actions with semantic-release to automatically:
 
-- Push to main/master branch
-- Tag creation (v*)
-- Pull requests (build only)
+- **Analyze commits** using conventional commit messages
+- **Generate version numbers** (patch/minor/major)
+- **Create Git tags** (e.g., v1.0.4)
+- **Build Docker images** with semantic version tags
+- **Push to Docker Hub** with multiple tags:
+  - `wsams/gifverse:latest` (always latest)
+  - `wsams/gifverse:1.0.4` (specific version)
+  - `wsams/gifverse:1.0` (major.minor)
+  - `wsams/gifverse:1` (major)
+
+### Release Triggers
+
+- **Push to main/master branch** - Triggers release if commits warrant a new version
+- **Manual workflow dispatch** - Force a release (useful for testing)
+- **Conventional commits** - Version bump based on commit message types:
+  - `fix:` → patch release (1.0.3 → 1.0.4)
+  - `feat:` → minor release (1.0.4 → 1.1.0)
+  - `BREAKING CHANGE:` → major release (1.0.4 → 2.0.0)
 
 ## License
 
