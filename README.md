@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/wsams/gifverse/workflows/Run%20Tests/badge.svg)](https://github.com/wsams/gifverse/actions)
 [![Docker](https://github.com/wsams/gifverse/workflows/Build%20and%20Push%20Docker%20Image/badge.svg)](https://github.com/wsams/gifverse/actions)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-wsams%2Fgifverse-blue?logo=docker)](https://hub.docker.com/r/wsams/gifverse)
 
 A Python web application that creates seamless GIF loops by concatenating original GIF frames with their reversed version.
 
@@ -27,6 +28,8 @@ A Python web application that creates seamless GIF loops by concatenating origin
 ## Installation
 
 ### Option 1: Docker (Recommended)
+
+> 📦 **Docker Hub**: [wsams/gifverse](https://hub.docker.com/r/wsams/gifverse)
 
 #### Using Pre-built Images
 
@@ -395,7 +398,15 @@ The project uses GitHub Actions for continuous integration and deployment:
    - Only runs on main/master branch pushes
    - **Safety**: Never publishes broken images
 
-3. **Docker Test Workflow** (`.github/workflows/docker-test.yml`)
+3. **Scheduled Docker Build** (`.github/workflows/docker-scheduled.yml`)
+   - **Runs daily** - Every night at 1 AM PDT (8 AM UTC)
+   - **Manual trigger** - Can be run manually via GitHub Actions UI
+   - **Always builds latest** - Uses the most recent Git tag
+   - **No tests required** - Focuses only on Docker image building
+   - **Keeps images fresh** - Ensures Docker images are up to date
+   - **Same tagging strategy** - Uses semantic versioning tags
+
+4. **Docker Test Workflow** (`.github/workflows/docker-test.yml`)
    - **Runs tests first** - Only tests Docker if unit tests pass
    - Tests the Docker image functionality
    - Verifies health endpoints

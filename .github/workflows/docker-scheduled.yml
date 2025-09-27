@@ -1,0 +1,98 @@
+name: Scheduled Docker Build
+
+on:
+  schedule:
+    # Run every night at 1 AM PDT (8 AM UTC)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      force-build:
+        description: 'Force build even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+  attestations: write
+
+jobs:
+  scheduled-docker-build:
+    name: Build and Push Latest Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Fetch all tags
+      run: git fetch --tags
+
+    - name: List available tags
+      run: |
+        echo "Available Git tags:"
+        git tag --sort=-version:refname | head -10
+        echo "Latest commit:"
+        git log --oneline -1
+
+    - name: Extract version from latest tag
+      id: version
+      run: |
+        LATEST_TAG=$(git describe --tags --abbrev=0)
+        echo "Latest tag: $LATEST_TAG"
+        # Remove 'v' prefix if present
+        VERSION=${LATEST_TAG#v}
+        echo "Version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "MAJOR_MINOR=$(echo $VERSION | cut -d. -f1-2)" >> $GITHUB_OUTPUT
+        echo "MAJOR=$(echo $VERSION | cut -d. -f1)" >> $GITHUB_OUTPUT
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ secrets.DOCKER_USERNAME }}/gifverse
+        tags: |
+          type=raw,value=${{ steps.version.outputs.VERSION }}
+          type=raw,value=${{ steps.version.outputs.MAJOR_MINOR }}
+          type=raw,value=${{ steps.version.outputs.MAJOR }}
+          type=raw,value=latest
+
+    - name: Show generated tags
+      run: |
+        echo "Generated Docker tags:"
+        echo "${{ steps.meta.outputs.tags }}"
+        echo "JSON format:"
+        echo "${{ steps.meta.outputs.json }}"
+
+    - name: Build and push Docker image
+      id: build
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Output image details
+      run: |
+        echo "Built and pushed Docker image with tags:"
+        echo "${{ steps.meta.outputs.tags }}"
+        echo "Digest: ${{ steps.build.outputs.digest }}"
+        echo "Scheduled build completed successfully! 🚀"
