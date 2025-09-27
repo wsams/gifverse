@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gifverse
+  labels:
+    app: gifverse
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gifverse
+  template:
+    metadata:
+      labels:
+        app: gifverse
+    spec:
+      containers:
+      - name: gifverse
+        image: gifverse:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK_ENV
+          value: "production"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: gif-storage
+          mountPath: /app/gifverses
+      volumes:
+      - name: gif-storage
+        persistentVolumeClaim:
+          claimName: gifverse-pvc
